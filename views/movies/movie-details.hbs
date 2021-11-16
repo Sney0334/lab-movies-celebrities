@@ -1,0 +1,20 @@
+<h2>Details</h2>
+<a href ="/">HOME</a> <br />
+<a href ="/movies/create">Create a new Movie</a><br/><br/>
+<p>Title:{{movie.title}}</p>
+<p>Genre:{{movie.genre}}</p>
+<p>Plot:{{movie.plot}}</p>
+<div>
+ {{#each movie.cast}}
+ <ul>
+     <li>Name: {{name}}</li>
+        <li>Occupation:{{occupation}}</li>
+   <li>Catch Phrase: {{catchPhrase}}</li>
+ 
+    {{/each}}
+    
+    </ul>
+</div>
+<form action="/movies/:id/create" method="post">
+<button type="submit">Delete the Movie</button> 
+</form>
