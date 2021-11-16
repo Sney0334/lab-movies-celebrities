@@ -44,15 +44,16 @@ router.get("/:id", async(req,res)=>{
     }
 })
 
-router.get("/:id/delete", async(req, res)=>{
-    try{
-        const id = req.params.id
-        const movie = await Movie.findByIdAndDelete(id)
-        res.redirect("/movies")
-    }catch(err){
-        console.log(err)
+router.post("/:id/delete", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const deletedMovie = await Movie.findByIdAndDelete(id);
+      console.log(deletedMovie);
+      res.redirect("/movies");
+    } catch (error) {
+      console.log(error);
     }
-})
+  });
 
 
 

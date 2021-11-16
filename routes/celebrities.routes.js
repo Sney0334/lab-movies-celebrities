@@ -31,4 +31,35 @@ router.get("/", async(req, res)=>{
         console.log(err)
     }
 })
+
+router
+  .route("/:id/edit")
+  .get(async (req, res) => {
+    try {
+      const { id } = req.params;
+      const movie = await Movie.findById(id).populate("cast");
+      const allCelebs = await Celebrity.find();
+      const filteredCelebs = allCelebs.filter((cel) => {
+        return !movie.cast.find((cas) => cel.name === cas.name);
+      });
+
+      res.render("movies/edit-movie", { movie, allCelebs: filteredCelebs });
+    } catch (error) {
+      console.log(error);
+    }
+  })
+  .post(async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { title, genre, plot, cast } = req.body;
+      const updatedMovie = await Movie.findByIdAndUpdate(
+        id,
+        { title, genre, plot, cast },
+        { new: true }
+      );
+      res.redirect(`/movies/${id}`);
+    } catch (error) {
+      console.log(error);
+    }
+  });
 module.exports = router;
